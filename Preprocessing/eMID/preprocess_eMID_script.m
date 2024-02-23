@@ -12,14 +12,14 @@ outputPath='/media/NAS/EEGdata/Methadone_eMID/prep_eegdata'
 inputFiles=fullfile(searchPath,filename)
 
 % Initialize parallel pool if not already started
-if isempty(gcp('nocreate'))
-    parpool(20); % Adjust the number of workers as needed
-end
+% if isempty(gcp('nocreate'))
+%    parpool(20); % Adjust the number of workers as needed
+%end
 
 % Add EEGLAB and FASTER paths (adjust to your paths)
 
 
-parfor i = 1:length(inputFiles)
+for i = 1:length(inputFiles)
     try
         % Call your preprocessing function
         preprocess_eMID(inputFiles{i}, outputPath);
@@ -44,4 +44,4 @@ parfor i = 1:length(inputFiles)
     end
 end
 
-delete(gcp('nocreate'));  % Closes the current parallel pool
+% delete(gcp('nocreate'));  % Closes the current parallel pool
