@@ -55,7 +55,7 @@ RefChan = 129; % Original reference channel
 [~, BadChan_Kurt] = pop_rejchan(EEG, 'elec', [1:128], 'threshold', [-3 3], 'norm', 'on', 'measure', 'kurt');
 
 % Bad channels identified by spectrum criteria
-[~, BadChan_Spec] = pop_rejchan(EEG, 'elec', [1:128], 'threshold', [-3 3], 'norm', 'on', 'measure', 'spec', 'freqrange', [0.1 45]);
+[~, BadChan_Spec] = pop_rejchan(EEG, 'elec', [1:128], 'threshold', [-3 3], 'norm', 'on', 'measure', 'spec', 'freqrange', [0.1 40]);
 
 % Bad channels identified using FASTER
 channel_list = channel_properties(EEG, [1:129], RefChan);
@@ -70,11 +70,7 @@ logPrint(sprintf('Total Unique Bad Channels: %d\nDetails: %s\n', length(BadChan_
 
 
 % Interpolating bad channels
-if ~isempty(BadChan_all)
-    for badi = 1:length(BadChan_all)
-        EEG = pop_interp(EEG, BadChan_all(badi), 'spherical');
-    end
-end
+EEG = pop_interp(EEG, BadChan_all, 'spherical');
 interpChan_n = length(BadChan_all);
 EEG = eeg_checkset(EEG);
 
